@@ -1,33 +1,32 @@
 from netmiko import ConnectHandler
 
-routeur = {
-    "device_type": "cisco_ios",
-    "host": "sandbox-iosxe-1.cisco.com",
-    "username": "admin",
-    "password": "cisco12345",
-    "port": 22,
-}
+def acces_netmiko():
+    routeur = {
+        "device_type": "cisco_iosxr",
+        "host": "sandbox-iosxr-1.cisco.com",
+        "username": "admin",
+        "password": "C1sco12345",
+        "port": 22,
+    }
 
-def main():
-    print("Connexion au routeur...")
-    connection = ConnectHandler(**routeur)
-    connection.enable()
+    print("Connexion au routeur Cisco C8000V...")
+    connexion = ConnectHandler(**routeur)
 
-    print(connection.send_command("show clock"))
+    # Affiche la date côté routeur
+    clock = connexion.send_command("show clock")
+    print("Date du routeur :")
+    print(clock)
 
-    interfaces = connection.send_command("show ip interface brief")
-    with open("interface.txt", "w") as f:
+    # Affiche les interfaces et les sauvegarde dans un fichier
+    interfaces = connexion.send_command("show interfaces")
+    with open("interfaces.txt", "w") as f:
         f.write(interfaces)
 
-    config = [
-        "interface loopback0",
-        "ip address 10.8.8.8 255.255.255.240",
-        "no shutdown"
-    ]
+    connexion.disconnect()
 
-    connection.send_config_set(config)
-    connection.disconnect()
+def dire_bonjour():
+    print("Hello, Git!")
 
 if __name__ == "__main__":
-    main()
-    
+    dire_bonjour()
+    acces_netmiko()
