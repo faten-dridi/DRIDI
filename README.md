@@ -17,7 +17,7 @@ git checkout -b feature/netmiko
 git checkout main
 git merge feature/netmiko
 
-git remote add origin https://github.com/USERNAME/prenom-nom-netmiko.git
+git remote add origin https://github.com/USERNAME/fatendridinetmiko.git
 git push -u origin main
 git fetch origin
 git checkout -b feature/salut origin/feature/salut
